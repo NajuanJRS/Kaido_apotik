@@ -17,4 +17,9 @@ class KategoriObat extends Model
     protected $guarded = ['id'];
     // add hidden
     protected $hidden = ['created_at', 'updated_at'];
+
+    public function obat()
+    {
+        return $this->hasMany(Obat::class, 'id');
+    }
 }

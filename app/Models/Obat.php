@@ -11,6 +11,7 @@ class Obat extends Model
     use HasFactory;
     // add fillable
     protected $fillable = [
+        'id',
         'nama_obat',
         'id_kategori',
         'bentuk_satuan',

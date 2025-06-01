@@ -25,15 +25,30 @@ class ObatResource extends Resource
     {
         return $form
             ->schema([
+                Forms\Components\TextInput::make('id')
+                    ->required()
+                    ->maxLength(5),
                 Forms\Components\TextInput::make('nama_obat')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\Select::make('nama_kategori')
+                Forms\Components\Select::make('id_kategori')
+                    ->label('Kategori Obat')
                     ->relationship('kategori_obat', 'nama_kategori')
                     ->required(),
-                Forms\Components\TextInput::make('bentuk_satuan')
-                    ->required()
-                    ->maxLength(255),
+                    Forms\Components\Select::make('bentuk_satuan')
+                    ->options([
+                        'Tablet' => 'Tablet',
+                        'Kapsul' => 'Kapsul',
+                        'Sirup' => 'Sirup',
+                        'Suspensi' => 'Suspensi',
+                        'Salep' => 'Salep',
+                        'Krim' => 'Krim',
+                        'Suppositoria' => 'Suppositoria',
+                        'Injeksi' => 'Injeksi',
+                        'Drops (tetes)' => 'Drops (tetes)',
+                        'Inhaler' => 'Inhaler',
+                    ])
+                    ->required(),
                 Forms\Components\TextInput::make('harga')
                     ->required()
                     ->numeric(),
