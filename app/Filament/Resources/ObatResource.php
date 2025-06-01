@@ -51,6 +51,7 @@ class ObatResource extends Resource
                     ->required(),
                 Forms\Components\TextInput::make('harga')
                     ->required()
+                    ->maxLength(10)
                     ->numeric(),
                 Forms\Components\TextInput::make('stok')
                     ->required()
@@ -96,7 +97,7 @@ class ObatResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-   Tables\Actions\DeleteAction::make(),
+    Tables\Actions\DeleteAction::make(),
 
             ])
             ->bulkActions([
