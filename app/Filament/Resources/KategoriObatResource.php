@@ -19,6 +19,8 @@ class KategoriObatResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Kategori Obat';
+
     public static function form(Form $form): Form
     {
         return $form

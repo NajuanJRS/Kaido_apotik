@@ -19,6 +19,8 @@ class ObatResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Obat';
+
     public static function form(Form $form): Form
     {
         return $form
