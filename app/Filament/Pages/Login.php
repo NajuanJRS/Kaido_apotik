@@ -56,18 +56,9 @@ class Login extends BaseLogin
         return app(LoginResponse::class);
     }
 
-    public function mount(): void
-    {
-        parent::mount();
-
-        $this->form->fill([
-            'email' => 'admin@admin.com',
-            'password' => 'password',
-            'remember' => true,
-        ]);
-    }
+    
     /**
-     * @return array<int | string, string | Form>
+     * @return array<int | string, string | Component>
      */
     protected function getForms(): array
     {

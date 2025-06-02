@@ -15,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class EResepResource extends Resource
 {
+    protected static ?int $navigationSort = 1;
+
     protected static ?string $model = EResep::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -29,6 +31,22 @@ class EResepResource extends Resource
                     ->required()
                     ->numeric(),
             ]);
+    }
+
+    public static function getNavigationIcon(): string|\Illuminate\Contracts\Support\Htmlable|null
+    {
+        return view('components.icons.antrian');
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user->hasRole(['super_admin', 'petugas']);
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
     }
 
     public static function table(Table $table): Table
@@ -52,7 +70,7 @@ class EResepResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-   Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make(),
 
             ])
             ->bulkActions([

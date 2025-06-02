@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class RiwayatResource extends Resource
 {
+    protected static ?int $navigationSort = 3;
     protected static ?string $model = Riwayat::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
@@ -35,6 +36,22 @@ class RiwayatResource extends Resource
                 Forms\Components\TextInput::make('status')
                     ->required(),
             ]);
+    }
+
+    public static function getNavigationIcon(): string|\Illuminate\Contracts\Support\Htmlable|null
+    {
+        return view('components.icons.riwayat');
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user->hasRole(['super_admin', 'admin', 'petugas']);
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
     }
 
     public static function table(Table $table): Table
@@ -65,7 +82,7 @@ class RiwayatResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-   Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make(),
 
             ])
             ->bulkActions([

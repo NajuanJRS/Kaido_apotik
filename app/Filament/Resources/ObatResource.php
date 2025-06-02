@@ -15,11 +15,12 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ObatResource extends Resource
 {
+    protected static ?int $navigationSort = 2;
     protected static ?string $model = Obat::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
-    protected static ?string $navigationLabel = 'Obat';
+    protected static ?string $navigationLabel = 'Stok Obat';
 
     public static function form(Form $form): Form
     {
@@ -35,7 +36,7 @@ class ObatResource extends Resource
                     ->label('Kategori Obat')
                     ->relationship('kategori_obat', 'nama_kategori')
                     ->required(),
-                    Forms\Components\Select::make('bentuk_satuan')
+                Forms\Components\Select::make('bentuk_satuan')
                     ->options([
                         'Tablet' => 'Tablet',
                         'Kapsul' => 'Kapsul',
@@ -96,7 +97,7 @@ class ObatResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
-   Tables\Actions\DeleteAction::make(),
+                Tables\Actions\DeleteAction::make(),
 
             ])
             ->bulkActions([
@@ -120,5 +121,21 @@ class ObatResource extends Resource
             'create' => Pages\CreateObat::route('/create'),
             'edit' => Pages\EditObat::route('/{record}/edit'),
         ];
+    }
+
+    public static function getNavigationIcon(): string|\Illuminate\Contracts\Support\Htmlable|null
+    {
+        return view('components.icons.obat');
+    }
+
+    public static function canViewAny(): bool
+    {
+        $user = auth()->user();
+        return $user->hasRole(['super_admin', 'admin', 'petugas']);
+    }
+
+    public static function shouldRegisterNavigation(): bool
+    {
+        return static::canViewAny();
     }
 }
