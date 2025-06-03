@@ -56,7 +56,8 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->brandLogo(asset('images/icons/antrian.svg'))
+            ->brandLogo('/images/icons/apotek-01-01.png')
+            ->brandLogoHeight('60px')
             ->path('')
             ->when($this->settings->login_enabled ?? true, fn($panel) => $panel->login(Login::class))
             ->when($this->settings->registration_enabled ?? true, fn($panel) => $panel->registration())
